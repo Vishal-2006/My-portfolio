@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github2, Play, Award, TrendingUp, Users } from 'lucide-react';
+import { ExternalLink, Github, Play, Award, TrendingUp, Users } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -153,7 +153,7 @@ const ProjectsSection = () => {
             )}
             {project.links.github && (
               <Button size="sm" variant="outline">
-                                        <Github2 className="w-4 h-4 mr-2" />
+                <Github className="w-4 h-4 mr-2" />
                 Code
               </Button>
             )}

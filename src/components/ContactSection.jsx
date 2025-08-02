@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Github2, LinkedIn, X, MessageSquare, Calendar, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, MessageSquare, Calendar, CheckCircle } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -82,19 +82,19 @@ const ContactSection = () => {
 
   const socialLinks = [
     {
-      icon: Github2,
+      icon: Github,
       name: 'GitHub',
       url: 'https://github.com/Vishal-2006',
       color: 'hover:text-gray-400'
     },
     {
-      icon: LinkedIn,
+      icon: Linkedin,
       name: 'LinkedIn',
       url: 'https://www.linkedin.com/in/vishal-r-b-52352b289/',
       color: 'hover:text-blue-400'
     },
     {
-      icon: X,
+      icon: Twitter,
       name: 'Twitter',
       url: 'https://x.com/Vishal_17890',
       color: 'hover:text-blue-400'
