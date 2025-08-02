@@ -156,7 +156,7 @@ const HeroSection = () => {
               <Linkedin className="h-6 w-6 text-foreground hover:text-primary transition-colors" />
             </motion.a>
             <motion.a
-              href="https://twitter.com/vishal_rb"
+              href="https://x.com/Vishal_17890"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 border border-[#333344] rounded-full hover:border-primary transition-colors duration-300"

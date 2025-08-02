@@ -90,19 +90,19 @@ const ContactSection = () => {
     {
       icon: Linkedin,
       name: 'LinkedIn',
-      url: 'https://linkedin.com/in/alexchen',
+      url: 'https://www.linkedin.com/in/vishal-r-b-52352b289/',
       color: 'hover:text-blue-400'
     },
     {
       icon: Twitter,
       name: 'Twitter',
-      url: 'https://twitter.com/alexchen_dev',
+      url: 'https://x.com/Vishal_17890',
       color: 'hover:text-blue-400'
     },
     {
       icon: MessageSquare,
       name: 'Discord',
-      url: 'https://discord.com/users/alexchen',
+      url: 'https://discord.com/channels/@vishal45854',
       color: 'hover:text-purple-400'
     }
   ];
