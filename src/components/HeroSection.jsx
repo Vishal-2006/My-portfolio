@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Twitter } from 'lucide-react';
+import { ChevronDown, Github2, LinkedIn, Mail, ExternalLink, X } from 'lucide-react';
 import { Button } from './ui/button';
 
 const HeroSection = () => {
@@ -143,7 +143,7 @@ const HeroSection = () => {
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Github className="h-6 w-6 text-foreground hover:text-primary transition-colors" />
+              <Github2 className="h-6 w-6 text-foreground hover:text-primary transition-colors" />
             </motion.a>
             <motion.a
               href="https://www.linkedin.com/in/vishal-r-b-52352b289/"
@@ -153,7 +153,7 @@ const HeroSection = () => {
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Linkedin className="h-6 w-6 text-foreground hover:text-primary transition-colors" />
+              <LinkedIn className="h-6 w-6 text-foreground hover:text-primary transition-colors" />
             </motion.a>
             <motion.a
               href="https://x.com/Vishal_17890"
@@ -163,7 +163,7 @@ const HeroSection = () => {
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Twitter className="h-6 w-6 text-foreground hover:text-primary transition-colors" />
+              <X className="h-6 w-6 text-foreground hover:text-primary transition-colors" />
             </motion.a>
           </motion.div>
         </motion.div>
