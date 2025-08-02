@@ -38,7 +38,7 @@ const AboutSection = () => {
           });
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -70,34 +70,34 @@ const AboutSection = () => {
   ];
 
   return (
-    <section id="about" ref={sectionRef} className="py-20 bg-card/50">
-      <div className="container mx-auto px-6">
+    <section id="about" ref={sectionRef} className="py-12 md:py-20 bg-card/50">
+      <div className="container mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1 }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-glow">
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 text-glow">
             About Me
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
             Passionate about revolutionizing the digital landscape through blockchain innovation and AI integration
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center mb-12 md:mb-20">
           {/* Personal Story */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, delay: 0.3 }}
-            className="space-y-6"
+            className="space-y-4 md:space-y-6"
           >
-            <h3 className="text-3xl font-semibold text-primary mb-6">
+            <h3 className="text-2xl md:text-3xl font-semibold text-primary mb-4 md:mb-6">
               My Journey in Blockchain
             </h3>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
             Along my journey, I've gained hands-on experience with a wide range of tools and technologies that have shaped my approach to building decentralized applications.
             I started with Solidity for smart contract development, using frameworks like Hardhat and Truffle for writing, testing, and deploying contracts on Ethereum-based blockchains.
             On the backend, I worked with Node.js and Express to build secure and scalable APIs that interact with blockchain networks, while also using Django with Python to develop data-driven dashboards and applications, 
@@ -112,25 +112,25 @@ const AboutSection = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, delay: 0.5 }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8"
           >
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+              <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-2">
                 {counters.experience}+
               </div>
-              <div className="text-muted-foreground">Years Experience</div>
+              <div className="text-sm md:text-base text-muted-foreground">Years Experience</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-secondary mb-2">
+              <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-secondary mb-2">
                 {counters.projects}+
               </div>
-              <div className="text-muted-foreground">Projects Completed</div>
+              <div className="text-sm md:text-base text-muted-foreground">Projects Completed</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-accent mb-2">
+              <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-accent mb-2">
                 {counters.clients}+
               </div>
-              <div className="text-muted-foreground">Happy Clients</div>
+              <div className="text-sm md:text-base text-muted-foreground">Happy Clients</div>
             </div>
           </motion.div>
         </div>
@@ -140,7 +140,7 @@ const AboutSection = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.7 }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
           {features.map((feature, index) => (
             <motion.div
@@ -150,16 +150,16 @@ const AboutSection = () => {
               transition={{ duration: 0.8, delay: 0.9 + index * 0.1 }}
             >
               <Card className="card-hover bg-card/80 border-[#333344]/50 h-full">
-                <CardContent className="p-6 text-center">
-                  <div className="mb-4 flex justify-center">
-                    <div className="p-3 rounded-full bg-primary/10 border border-primary/30">
-                      <feature.icon className="h-8 w-8 text-primary" />
+                <CardContent className="p-4 md:p-6 text-center">
+                  <div className="mb-3 md:mb-4 flex justify-center">
+                    <div className="p-2 md:p-3 rounded-full bg-primary/10 border border-primary/30">
+                      <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-primary" />
                     </div>
                   </div>
-                  <h4 className="text-xl font-semibold mb-3 text-foreground">
+                  <h4 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-foreground">
                     {feature.title}
                   </h4>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                     {feature.description}
                   </p>
                 </CardContent>
@@ -173,13 +173,13 @@ const AboutSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 1.5 }}
-          className="text-center mt-16"
+          className="text-center mt-12 md:mt-16"
         >
-          <div className="inline-block p-8 rounded-2xl bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/30">
-            <h3 className="text-2xl font-semibold mb-4 text-primary">
+          <div className="inline-block p-6 md:p-8 rounded-2xl bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/30">
+            <h3 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4 text-primary">
               Ready to Build the Future?
             </h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl">
+            <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6 max-w-2xl mx-auto px-4">
               Let's collaborate on your next blockchain project and create something extraordinary together.
             </p>
           </div>
