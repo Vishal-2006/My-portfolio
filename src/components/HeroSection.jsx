@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Twitter } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, Mail, ExternalLink, X } from 'lucide-react';
 import { Button } from './ui/button';
 
 const HeroSection = () => {
@@ -163,7 +163,7 @@ const HeroSection = () => {
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Twitter className="h-6 w-6 text-foreground hover:text-primary transition-colors" />
+              <X className="h-6 w-6 text-foreground hover:text-primary transition-colors" />
             </motion.a>
           </motion.div>
         </motion.div>

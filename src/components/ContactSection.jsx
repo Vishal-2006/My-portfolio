@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, MessageSquare, Calendar, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Github, Linkedin, X, MessageSquare, Calendar, CheckCircle } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -94,7 +94,7 @@ const ContactSection = () => {
       color: 'hover:text-blue-400'
     },
     {
-      icon: Twitter,
+      icon: X,
       name: 'Twitter',
       url: 'https://x.com/Vishal_17890',
       color: 'hover:text-blue-400'
