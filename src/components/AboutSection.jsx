@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Code, Cpu, Zap, Award, Users, Rocket } from 'lucide-react';
+import { Code, Cpu, Award } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 
 const AboutSection = () => {
@@ -51,7 +51,7 @@ const AboutSection = () => {
   const features = [
     {
       icon: Code,
-      title: "Smart Contract Expert",
+      title: "Intermediate Smart Contract Writer",
       description: "Specialized in Solidity development with extensive experience in DeFi protocols and NFT marketplaces."
     },
     {
@@ -59,129 +59,191 @@ const AboutSection = () => {
       title: "AI Integration",
       description: "Pioneering the integration of machine learning models with blockchain technology for intelligent DApps."
     },
-    
     {
       icon: Award,
       title: "Security First",
       description: "Committed to writing secure, audited smart contracts with comprehensive testing frameworks."
     },
-    
-    
   ];
 
   return (
-    <section id="about" ref={sectionRef} className="py-12 md:py-20 bg-card/50">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="about" ref={sectionRef} className="py-20 md:py-32 bg-background relative overflow-hidden">
+      {/* Animated background */}
+      <motion.div
+        className="absolute -top-40 -left-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none"
+        animate={{
+          y: [0, 40, 0],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: 'easeInOut'
+        }}
+      />
+      <motion.div
+        className="absolute -bottom-40 -right-40 w-80 h-80 bg-secondary/5 rounded-full blur-3xl pointer-events-none"
+        animate={{
+          y: [0, -40, 0],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: 'easeInOut'
+        }}
+      />
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        {/* Header with text reveal */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
-          className="text-center mb-12 md:mb-16"
+          initial={{ opacity: 0 }}
+          animate={isVisible ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16 md:mb-24"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 text-glow">
-            About Me
-          </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
+          <motion.h2
+            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-glow leading-tight"
+            initial={{ opacity: 0, y: 40 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
+            My Journey in Blockchain
+          </motion.h2>
+          <motion.p
+            className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             Passionate about revolutionizing the digital landscape through blockchain innovation and AI integration
-          </p>
+          </motion.p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center mb-12 md:mb-20">
-          {/* Personal Story */}
+        {/* Main content grid */}
+        <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center mb-20">
+          {/* Left side - Description */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, delay: 0.3 }}
-            className="space-y-4 md:space-y-6"
+            className="space-y-6"
           >
-            <h3 className="text-2xl md:text-3xl font-semibold text-primary mb-4 md:mb-6">
-              My Journey in Blockchain
-            </h3>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-            Along my journey, I've gained hands-on experience with a wide range of tools and technologies that have shaped my approach to building decentralized applications.
-            I started with Solidity for smart contract development, using frameworks like Hardhat and Truffle for writing, testing, and deploying contracts on Ethereum-based blockchains.
-            On the backend, I worked with Node.js and Express to build secure and scalable APIs that interact with blockchain networks, while also using Django with Python to develop data-driven dashboards and applications, 
-            especially for projects requiring AI integration. For frontend development, I rely on React and Tailwind CSS to craft modern, responsive interfaces, often integrating libraries like web3.js and ethers.js to connect dApps with smart contracts seamlessly. 
-            I've incorporated AI technologies using Python libraries such as TensorFlow, OpenCV, and scikit-learn — particularly for tasks like OCR-based certificate verification and intelligent decision-making in DeFi platforms. My development workflow includes containerization with Docker, version control with GitHub, and deployment on platforms like Vercel, Railway, and Heroku. I’ve also used decentralized storage solutions like IPFS and integrated wallets like MetaMask and WalletConnect for secure user authentication. These tools and languages collectively empower me to build secure, scalable, and intelligent blockchain-based solutions.
-            </p>
-            
+            <div className="space-y-4">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Along my journey, I've gained hands-on experience with a wide range of tools and technologies that have shaped my approach to building decentralized applications.
+              </p>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                I started with Solidity for smart contract development, using frameworks like Hardhat and Truffle for writing, testing, and deploying contracts on Ethereum-based blockchains.
+              </p>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                On the backend, I worked with Node.js and Express to build secure and scalable APIs that interact with blockchain networks, while also using Django with Python to develop data-driven dashboards and applications, especially for projects requiring AI integration.
+              </p>
+            </div>
           </motion.div>
 
-          {/* Stats */}
+          {/* Right side - Stats with cards */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8"
+            transition={{ duration: 1, delay: 0.4 }}
+            className="space-y-6"
           >
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-2">
-                {counters.experience}+
-              </div>
-              <div className="text-sm md:text-base text-muted-foreground">Years Experience</div>
+            {/* Stats cards */}
+            <div className="grid grid-cols-3 gap-4">
+              {[
+                { label: 'Years Experience', value: counters.experience },
+                { label: 'Projects', value: counters.projects },
+                { label: 'Happy Clients', value: counters.clients }
+              ].map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  className="p-4 md:p-6 rounded-xl bg-gradient-to-br from-white/5 to-white/2 border border-white/10 backdrop-blur-md hover:border-primary/50 transition-colors duration-300"
+                  whileHover={{ y: -5 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.5 + idx * 0.1 }}
+                >
+                  <div className="text-2xl md:text-3xl font-bold text-primary mb-2">{stat.value}+</div>
+                  <div className="text-xs md:text-sm text-muted-foreground">{stat.label}</div>
+                </motion.div>
+              ))}
             </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-secondary mb-2">
-                {counters.projects}+
-              </div>
-              <div className="text-sm md:text-base text-muted-foreground">Projects Completed</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-accent mb-2">
-                {counters.clients}+
-              </div>
-              <div className="text-sm md:text-base text-muted-foreground">Happy Clients</div>
-            </div>
+
+            {/* Feature highlight */}
+            <motion.div
+              className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/30 mt-8"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 0.8, type: 'spring', stiffness: 100 }}
+            >
+              <p className="text-sm md:text-base text-foreground">
+                Specializing in secure smart contract development with extensive experience in DeFi protocols, NFT marketplaces, and AI-integrated blockchain solutions.
+              </p>
+            </motion.div>
           </motion.div>
         </div>
 
-        {/* Features Grid */}
+        {/* Features Grid - Full width */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.7 }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          transition={{ duration: 1, delay: 0.9 }}
+          className="mt-20 md:mt-32"
         >
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.9 + index * 0.1 }}
-            >
-              <Card className="card-hover bg-card/80 border-[#333344]/50 h-full">
-                <CardContent className="p-4 md:p-6 text-center">
-                  <div className="mb-3 md:mb-4 flex justify-center">
-                    <div className="p-2 md:p-3 rounded-full bg-primary/10 border border-primary/30">
-                      <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-primary" />
-                    </div>
-                  </div>
-                  <h4 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-foreground">
-                    {feature.title}
-                  </h4>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
+          <motion.h3
+            className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.9 }}
+          >
+            Core Expertise
+          </motion.h3>
 
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 1.5 }}
-          className="text-center mt-12 md:mt-16"
-        >
-          <div className="inline-block p-6 md:p-8 rounded-2xl bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/30">
-            <h3 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4 text-primary">
-              Ready to Build the Future?
-            </h3>
-            <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6 max-w-2xl mx-auto px-4">
-              Let's collaborate on your next blockchain project and create something extraordinary together.
-            </p>
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+            {features.map((feature, index) => {
+              const IconComponent = feature.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 1 + index * 0.1, type: 'spring', stiffness: 200 }}
+                  whileHover={{ y: -10, transition: { type: 'spring', stiffness: 300 } }}
+                  className="group"
+                >
+                  <Card className="bg-gradient-to-br from-white/5 to-white/2 border border-white/10 backdrop-blur-md h-full overflow-hidden relative hover:border-primary/50 transition-all duration-300">
+                    {/* Hover gradient background */}
+                    <motion.div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 128, 255, 0.05) 100%)'
+                      }}
+                    />
+
+                    <CardContent className="p-6 md:p-8 relative z-10">
+                      <motion.div
+                        className="inline-flex p-3 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/30 mb-4 group-hover:border-primary/60 transition-colors"
+                        whileHover={{ rotate: 360, scale: 1.1 }}
+                        transition={{ type: 'spring', stiffness: 300 }}
+                      >
+                        <IconComponent className="h-6 w-6 text-primary" />
+                      </motion.div>
+
+                      <h4 className="text-lg md:text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+                        {feature.title}
+                      </h4>
+                      <p className="text-sm md:text-base text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300 leading-relaxed">
+                        {feature.description}
+                      </p>
+
+                      {/* Bottom accent line */}
+                      <motion.div
+                        className="h-1 bg-gradient-to-r from-primary to-secondary rounded-full w-0 group-hover:w-full mt-4 transition-all duration-500"
+                      />
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
       </div>

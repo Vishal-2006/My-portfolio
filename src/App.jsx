@@ -3,6 +3,7 @@ import Navigation from './components/Navigation';
 import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
 import SkillsSection from './components/SkillsSection';
+import AchievementsSection from './components/AchievementsSection';
 import ProjectsSection from './components/ProjectsSection';
 import ContactSection from './components/ContactSection';
 import './App.css';
@@ -20,6 +21,9 @@ function App() {
         </div>
         <div id="skills">
           <SkillsSection />
+        </div>
+        <div id="achievements">
+          <AchievementsSection />
         </div>
         <div id="projects">
           <ProjectsSection />

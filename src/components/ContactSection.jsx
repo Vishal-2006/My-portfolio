@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, X, MessageSquare, Calendar, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Github, Linkedin, X, MessageSquare, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -16,6 +16,7 @@ const ContactSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState(null);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -45,16 +46,44 @@ const ContactSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    
-    // Reset success message after 5 seconds
-    setTimeout(() => setIsSubmitted(false), 5000);
+    setError(null);
+
+    try {
+      // Send email using Web3Forms API (completely free, no setup needed)
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: '1c8b0d75-1d8a-4edd-85f0-e0a65e4a8f4f', // Web3Forms public key
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          from_name: 'Portfolio Contact Form',
+          to_email: 'vishalrbxb10@gmail.com'
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+
+        // Reset success message after 5 seconds
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        throw new Error(data.message || 'Failed to send message');
+      }
+    } catch (err) {
+      console.error('Error sending email:', err);
+      setError('Failed to send message. Please try again or email me directly at vishalrbxb10@gmail.com');
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -235,6 +264,26 @@ const ContactSection = () => {
                     <p className="text-muted-foreground">
                       Thank you for reaching out. I'll get back to you within 24 hours.
                     </p>
+                  </motion.div>
+                ) : error ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-8"
+                  >
+                    <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
+                    <h4 className="text-xl font-semibold text-foreground mb-2">
+                      Oops! Something went wrong
+                    </h4>
+                    <p className="text-muted-foreground mb-4">
+                      {error}
+                    </p>
+                    <button
+                      onClick={() => setError(null)}
+                      className="text-primary hover:text-primary/80 transition-colors"
+                    >
+                      Try again
+                    </button>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
