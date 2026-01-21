@@ -31,7 +31,7 @@ const AchievementsSection = () => {
       title: 'Blockchain Basics',
       issuer: 'Cyfrin Updraft',
       date: '2025',
-      image: 'public/cyfrin/blockchain.png',
+      image: '/cyfrin/blockchain.png',
       link: 'https://www.linkedin.com/in/vishal-r-b-52352b289/',
       description: 'Fundamental understanding of blockchain technology and its applications'
     },
@@ -40,7 +40,7 @@ const AchievementsSection = () => {
       title: 'Advanced Wallet Security',
       issuer: 'Cyfrin Updraft',
       date: '2025',
-      image: 'public/cyfrin/advwal.png',
+      image: '/cyfrin/advwal.png',
       link: 'https://www.linkedin.com/in/vishal-r-b-52352b289/',
       description: 'In-depth knowledge of securing digital wallets and private keys'
     },
@@ -49,7 +49,7 @@ const AchievementsSection = () => {
       title: 'Zero Knowledge Proofs',
       issuer: 'Cyfrin Updraft',
       date: '2025',
-      image: 'public/cyfrin/zkp.png',
+      image: '/cyfrin/zkp.png',
       link: 'https://www.linkedin.com/in/vishal-r-b-52352b289/',
       description: 'Comprehensive understanding of zero knowledge proof concepts and implementations'
     },
@@ -58,7 +58,7 @@ const AchievementsSection = () => {
       title: 'Chainlink fundamentals',
       issuer: 'Cyfrin Updraft',
       date: '2026',
-      image: 'public/cyfrin/chainlink.png',
+      image: '/cyfrin/chainlink.png',
       link: 'https://www.linkedin.com/in/vishal-r-b-52352b289/',
       description: 'Understanding of Chainlink oracles and their role in smart contract development'
     },
@@ -67,7 +67,7 @@ const AchievementsSection = () => {
       title: 'Solidity Smart Contract Development',
       issuer: 'Cyfrin Updraft',
       date: '2025',
-      image: 'public/cyfrin/solidity.png',
+      image: '/cyfrin/solidity.png',
       link  : 'https://www.linkedin.com/in/vishal-r-b-52352b289/',
         description: 'Proficiency in writing, deploying, and managing smart contracts using Solidity'
     },
