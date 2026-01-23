@@ -148,6 +148,22 @@ const ProjectsSection = () => {
       },
       status: 'Completed',
       featured: false
+    },
+    {
+      id: 9,
+      title: 'AI Powered Crypto Portfolio',
+      category: 'AI & Web Development',
+      description: 'An AI-driven crypto portfolio management tool that provides real-time insights and automated trading strategies.',
+      image: 'crypto.png',
+      technologies: ['typescript', 'Next.js', 'Ollama AI', 'Tailwind CSS'],
+      features: ['AI Insights', 'Portfolio Management'],
+      links: {
+        
+        github: 'https://github.com/Vishal-2006/AI-powered-Testnet-Portfolio-tracker-://github.com/Vishal-2006/AI-Crypto-Portfolio'
+      },
+      status: 'Beta',
+      featured: false
+
     }
   ];
 
@@ -157,7 +173,8 @@ const ProjectsSection = () => {
     { key: 'DeFi', label: 'DeFi' },
     { key: 'AI & Web3', label: 'AI & Web3' },
     { key: 'Healthcare', label: 'Healthcare' },
-    { key: 'Frontend', label: 'Frontend' }
+    { key: 'Frontend', label: 'Frontend' },
+    { key: 'AI & Web Development', label: 'AI & Web Development' }
   ];
 
   const filteredProjects = activeFilter === 'all' 
