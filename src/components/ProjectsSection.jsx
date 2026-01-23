@@ -157,13 +157,12 @@ const ProjectsSection = () => {
       image: 'crypto.png',
       technologies: ['typescript', 'Next.js', 'Ollama AI', 'Tailwind CSS'],
       features: ['AI Insights', 'Portfolio Management'],
+      stats: { portfolios: '2+', accuracy: '78%', users: '1+' },
       links: {
-        
-        github: 'https://github.com/Vishal-2006/AI-powered-Testnet-Portfolio-tracker-://github.com/Vishal-2006/AI-Crypto-Portfolio'
+        github: 'https://github.com/Vishal-2006/AI-Crypto-Portfolio'
       },
       status: 'Beta',
       featured: false
-
     }
   ];
 
