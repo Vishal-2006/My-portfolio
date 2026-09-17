@@ -1,38 +1,26 @@
 import React from 'react';
-import Navigation from './components/Navigation';
-import HeroSection from './components/HeroSection';
-import AboutSection from './components/AboutSection';
-import SkillsSection from './components/SkillsSection';
-import AchievementsSection from './components/AchievementsSection';
-import ProjectsSection from './components/ProjectsSection';
-import ContactSection from './components/ContactSection';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
+import Experience from './pages/Experience';
+import Skills from './pages/Skills';
+import Projects from './pages/Projects';
+import Contact from './pages/Contact';
+import SiteLayout from './components/SiteLayout';
 
 function App() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Navigation />
-      <main>
-        <div id="hero">
-          <HeroSection />
-        </div>
-        <div id="about">
-          <AboutSection />
-        </div>
-        <div id="skills">
-          <SkillsSection />
-        </div>
-        <div id="achievements">
-          <AchievementsSection />
-        </div>
-        <div id="projects">
-          <ProjectsSection />
-        </div>
-        <div id="contact">
-          <ContactSection />
-        </div>
-      </main>
-    </div>
+    <Routes>
+      <Route element={<SiteLayout />}> 
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/experience" element={<Experience />} />
+        <Route path="/skills" element={<Skills />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/contact" element={<Contact />} />
+      </Route>
+    </Routes>
   );
 }
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, X, MessageSquare, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
-import { Card, CardContent } from './ui/card';
+import { Mail, Phone, MapPin, Send, Github, Linkedin, X, MessageSquare, Copy, Check, Sparkles, Clock, ArrowUpRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 
 const ContactSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,7 +26,7 @@ const ContactSection = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.15 }
     );
 
     if (sectionRef.current) {
@@ -35,6 +35,12 @@ const ContactSection = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('vishalrbxb10@gmail.com');
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2500);
+  };
 
   const handleInputChange = (e) => {
     setFormData({
@@ -49,22 +55,21 @@ const ContactSection = () => {
     setError(null);
 
     try {
-      // Send email using Web3Forms API (completely free, no setup needed)
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          Accept: 'application/json'
         },
         body: JSON.stringify({
-          access_key: '1c8b0d75-1d8a-4edd-85f0-e0a65e4a8f4f', // Web3Forms public key
+          access_key: '1c8b0d75-1d8a-4edd-85f0-e0a65e4a8f4f',
           name: formData.name,
           email: formData.email,
-          subject: formData.subject,
+          subject: formData.subject || 'Portfolio Inquiry',
           message: formData.message,
-          from_name: 'Portfolio Contact Form',
+          from_name: 'Vishal Portfolio Contact',
           to_email: 'vishalrbxb10@gmail.com'
-        }),
+        })
       });
 
       const data = await response.json();
@@ -73,329 +78,290 @@ const ContactSection = () => {
         setIsSubmitting(false);
         setIsSubmitted(true);
         setFormData({ name: '', email: '', subject: '', message: '' });
-
-        // Reset success message after 5 seconds
-        setTimeout(() => setIsSubmitted(false), 5000);
+        setTimeout(() => setIsSubmitted(false), 6000);
       } else {
-        throw new Error(data.message || 'Failed to send message');
+        throw new Error(data.message || 'Submission failed');
       }
     } catch (err) {
-      console.error('Error sending email:', err);
-      setError('Failed to send message. Please try again or email me directly at vishalrbxb10@gmail.com');
+      console.error('Submission error:', err);
+      setError('Failed to send message. Please send an email directly to vishalrbxb10@gmail.com');
       setIsSubmitting(false);
     }
   };
 
-  const contactInfo = [
+  const contactCards = [
     {
       icon: Mail,
-      title: 'Email',
+      title: 'Email Address',
       value: 'vishalrbxb10@gmail.com',
-      link: 'mailto:vishalrbxb10@gmail.com',
-      description: 'Best for project inquiries'
+      action: handleCopyEmail,
+      actionLabel: copiedEmail ? 'Copied to clipboard!' : 'Click to copy',
+      actionIcon: copiedEmail ? Check : Copy
     },
     {
       icon: Phone,
-      title: 'Phone',
-      link: 'tel:+91 8148913024',
-      description: 'Available 9 AM - 6 PM PST'
+      title: 'Phone / WhatsApp',
+      value: '+91 8148913024',
+      link: 'tel:+918148913024'
     },
     {
       icon: MapPin,
       title: 'Location',
-      value: 'Nagercoil, Tamil Nadu, India',
-      description: 'Open to remote work worldwide'
-    },
-    
-  ];
-
-  const socialLinks = [
-    {
-      icon: Github,
-      name: 'GitHub',
-      url: 'https://github.com/Vishal-2006',
-      color: 'hover:text-gray-400'
-    },
-    {
-      icon: Linkedin,
-      name: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/vishal-r-b-52352b289/',
-      color: 'hover:text-blue-400'
-    },
-    {
-      icon: X,
-      name: 'Twitter',
-      url: 'https://x.com/Vishal_17890',
-      color: 'hover:text-blue-400'
-    },
-    {
-      icon: MessageSquare,
-      name: 'Discord',
-      url: 'https://discord.com/channels/@vishal45854',
-      color: 'hover:text-purple-400'
+      value: 'Rajapalayam / Nagercoil, Tamil Nadu, India',
+      subtext: 'Available for Remote Worldwide & Relocation'
     }
   ];
 
   return (
-    <section id="contact" ref={sectionRef} className="py-20 bg-background">
-      <div className="container mx-auto px-6">
+    <section id="contact" ref={sectionRef} className="py-20 md:py-28 px-4 sm:px-6 relative z-10">
+      <div className="max-w-6xl mx-auto">
+        
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-glow">
-            Let's Build Together
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-indigo-500/20 bg-indigo-500/5 text-xs font-semibold text-indigo-300">
+            <Sparkles className="w-3.5 h-3.5" />
+            LET'S COLLABORATE
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+            Have an AI, Blockchain, or Full-Stack Project?
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Ready to transform your ideas into revolutionary blockchain solutions? Let's start the conversation.
+          <p className="text-slate-400 text-base sm:text-lg">
+            Whether you need machine learning pipelines, smart contract development, or a scalable Next.js/React web application, let's connect.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
-          {/* Contact Information */}
+        {/* Split Contact Grid (Mobbin / Dribbble Style) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Left Column: Direct Info & Socials (5 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="space-y-8"
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="lg:col-span-5 space-y-5"
           >
-            <div>
-              <h3 className="text-3xl font-semibold mb-6 text-primary">
-                Get In Touch
-              </h3>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Whether you're looking to build a DeFi protocol, launch an NFT marketplace, 
-                or integrate AI into your blockchain project, I'm here to help bring your vision to life.
-              </p>
-            </div>
-
-            {/* Contact Methods */}
-            <div className="grid sm:grid-cols-2 gap-6">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.8, delay: 0.5 + index * 0.1 }}
-                >
-                  <Card className="card-hover bg-card/80 border-[#333344]/50 h-full">
-                    <CardContent className="p-6">
-                      <div className="flex items-start space-x-4">
-                        <div className="p-3 rounded-full bg-primary/10 border border-primary/30">
-                          <info.icon className="h-6 w-6 text-primary" />
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-foreground mb-1">
-                            {info.title}
-                          </h4>
-                          {info.link ? (
-                            <a
-                              href={info.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:text-primary/80 transition-colors"
-                            >
-                              {info.value}
-                            </a>
-                          ) : (
-                            <div className="text-foreground">{info.value}</div>
-                          )}
-                          <p className="text-sm text-muted-foreground mt-1">
-                            {info.description}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.9 }}
-            >
-              <h4 className="text-xl font-semibold mb-4 text-foreground">
-                Connect With Me
-              </h4>
-              <div className="flex space-x-4">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`p-3 rounded-full border border-primary/30 hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:scale-110 ${social.color}`}
-                    title={social.name}
-                  >
-                    <social.icon className="h-6 w-6" />
-                  </a>
-                ))}
+            {/* Status Card */}
+            <div className="glass-card rounded-3xl p-6 border border-emerald-500/20 bg-emerald-500/[0.03]">
+              <div className="flex items-center gap-3">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
+                </span>
+                <div>
+                  <h3 className="text-sm font-bold text-white">Fast Response Guaranteed</h3>
+                  <p className="text-xs text-slate-400 flex items-center gap-1.5 mt-0.5">
+                    <Clock className="w-3.5 h-3.5 text-cyan-400" /> Typically replies within 24 hours
+                  </p>
+                </div>
               </div>
-            </motion.div>
+            </div>
+
+            {/* Direct Contact Cards */}
+            {contactCards.map((card, idx) => {
+              const Icon = card.icon;
+              const ActionIcon = card.actionIcon;
+              return (
+                <div
+                  key={card.title}
+                  onClick={card.action}
+                  className={`glass-card rounded-3xl p-6 transition-all ${
+                    card.action ? 'cursor-pointer hover:border-cyan-400/50 group' : ''
+                  }`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-slate-400 font-medium">{card.title}</div>
+                        {card.link ? (
+                          <a href={card.link} className="text-sm font-semibold text-white hover:text-cyan-400 transition-colors">
+                            {card.value}
+                          </a>
+                        ) : (
+                          <div className="text-sm font-semibold text-white group-hover:text-cyan-300 transition-colors">
+                            {card.value}
+                          </div>
+                        )}
+                        {card.subtext && (
+                          <div className="text-[11px] text-slate-400 mt-0.5">{card.subtext}</div>
+                        )}
+                      </div>
+                    </div>
+
+                    {ActionIcon && (
+                      <span className="p-2 rounded-lg bg-white/5 text-slate-400 group-hover:text-cyan-400 group-hover:bg-cyan-500/10 transition-all">
+                        <ActionIcon className="w-4 h-4" />
+                      </span>
+                    )}
+                  </div>
+                  {card.actionLabel && (
+                    <div className="text-[11px] text-cyan-400 font-medium mt-2 text-right">
+                      {card.actionLabel}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            {/* Social Channels */}
+            <div className="glass-card rounded-3xl p-6">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">
+                Connect on Social Networks
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href="https://github.com/vishal-2006"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 p-3 rounded-2xl border border-white/5 bg-white/[0.02] text-xs font-medium text-slate-300 hover:text-cyan-400 hover:border-cyan-400/30 hover:bg-cyan-500/10 transition-all"
+                >
+                  <Github className="w-4 h-4 text-cyan-400" />
+                  <span>GitHub</span>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/vishal-r-b-52352b289/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 p-3 rounded-2xl border border-white/5 bg-white/[0.02] text-xs font-medium text-slate-300 hover:text-cyan-400 hover:border-cyan-400/30 hover:bg-cyan-500/10 transition-all"
+                >
+                  <Linkedin className="w-4 h-4 text-cyan-400" />
+                  <span>LinkedIn</span>
+                </a>
+                <a
+                  href="https://x.com/Vishal_17890"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 p-3 rounded-2xl border border-white/5 bg-white/[0.02] text-xs font-medium text-slate-300 hover:text-cyan-400 hover:border-cyan-400/30 hover:bg-cyan-500/10 transition-all"
+                >
+                  <X className="w-4 h-4 text-cyan-400" />
+                  <span>Twitter / X</span>
+                </a>
+                <a
+                  href="https://discord.com/channels/@vishal45854"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 p-3 rounded-2xl border border-white/5 bg-white/[0.02] text-xs font-medium text-slate-300 hover:text-cyan-400 hover:border-cyan-400/30 hover:bg-cyan-500/10 transition-all"
+                >
+                  <MessageSquare className="w-4 h-4 text-indigo-400" />
+                  <span>Discord</span>
+                </a>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Right Column: Web3Forms Contact Form (7 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 1, delay: 0.5 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="lg:col-span-7 glass-card rounded-3xl p-8 sm:p-10 border border-white/10"
           >
-            <Card className="bg-card/80 border-[#333344]/50">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-semibold mb-6 text-primary">
-                  Send Me a Message
-                </h3>
-                
-                {isSubmitted ? (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-8"
-                  >
-                    <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-                    <h4 className="text-xl font-semibold text-foreground mb-2">
-                      Message Sent Successfully!
-                    </h4>
-                    <p className="text-muted-foreground">
-                      Thank you for reaching out. I'll get back to you within 24 hours.
-                    </p>
-                  </motion.div>
-                ) : error ? (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-8"
-                  >
-                    <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-                    <h4 className="text-xl font-semibold text-foreground mb-2">
-                      Oops! Something went wrong
-                    </h4>
-                    <p className="text-muted-foreground mb-4">
-                      {error}
-                    </p>
-                    <button
-                      onClick={() => setError(null)}
-                      className="text-primary hover:text-primary/80 transition-colors"
-                    >
-                      Try again
-                    </button>
-                  </motion.div>
+            <h3 className="text-xl font-bold text-white mb-2">Send a Direct Message</h3>
+            <p className="text-xs text-slate-400 mb-6">
+              Fill in your project specifications or question below. I will respond to your email.
+            </p>
+
+            {isSubmitted && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mb-6 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-medium flex items-center gap-2.5"
+              >
+                <Check className="w-4 h-4 shrink-0" />
+                Thank you! Your message has been sent successfully. I will get back to you shortly.
+              </motion.div>
+            )}
+
+            {error && (
+              <div className="mb-6 p-4 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-medium">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-slate-300">Your Name *</label>
+                  <Input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="e.g. Satoshi Nakamoto"
+                    className="rounded-xl border-white/10 bg-white/[0.03] text-white placeholder:text-slate-500 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all text-xs py-2.5"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-slate-300">Email Address *</label>
+                  <Input
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="name@company.com"
+                    className="rounded-xl border-white/10 bg-white/[0.03] text-white placeholder:text-slate-500 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all text-xs py-2.5"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-300">Subject / Project Scope</label>
+                <Input
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  placeholder="e.g. AI Model Pipeline, Smart Contract Audit, Next.js Full-Stack App..."
+                  className="rounded-xl border-white/10 bg-white/[0.03] text-white placeholder:text-slate-500 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all text-xs py-2.5"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-300">Project Details / Message *</label>
+                <Textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={5}
+                  placeholder="Describe your requirements, timeline, or inquiries..."
+                  className="rounded-xl border-white/10 bg-white/[0.03] text-white placeholder:text-slate-500 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all text-xs"
+                />
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full rounded-2xl py-3.5 text-xs font-bold bg-gradient-to-r from-cyan-400 to-sky-500 text-black hover:from-cyan-300 hover:to-sky-400 shadow-lg shadow-cyan-500/25 border-0 hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center gap-2">
+                    <span className="w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                    Sending Message...
+                  </span>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                          Name *
-                        </label>
-                        <Input
-                          id="name"
-                          name="name"
-                          type="text"
-                          required
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          className="bg-background/50 border-[#333344] focus:border-primary"
-                          placeholder="Your full name"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                          Email *
-                        </label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          className="bg-background/50 border-[#333344] focus:border-primary"
-                          placeholder="your.email@example.com"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
-                        Subject *
-                      </label>
-                      <Input
-                        id="subject"
-                        name="subject"
-                        type="text"
-                        required
-                        value={formData.subject}
-                        onChange={handleInputChange}
-                        className="bg-background/50 border-[#333344] focus:border-primary"
-                        placeholder="Project inquiry, consultation, etc."
-                      />
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                        Message *
-                      </label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        required
-                        rows={6}
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        className="bg-background/50 border-[#333344] focus:border-primary resize-none"
-                        placeholder="Tell me about your project, timeline, budget, and any specific requirements..."
-                      />
-                    </div>
-                    
-                    <Button
-                      type="submit"
-                      size="lg"
-                      disabled={isSubmitting}
-                      className="w-full glow-effect"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          Send Message
-                          <Send className="ml-2 h-5 w-5" />
-                        </>
-                      )}
-                    </Button>
-                  </form>
+                  <span className="flex items-center justify-center gap-2">
+                    Send Message
+                    <Send className="w-3.5 h-3.5" />
+                  </span>
                 )}
-              </CardContent>
-            </Card>
+              </Button>
+            </form>
           </motion.div>
+
         </div>
 
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="text-center mt-20 pt-8 border-t border-[#333344]/50"
-        >
-          <p className="text-muted-foreground">
-            By Vishal R B 
-            
-          </p>
-          <p className="text-sm text-muted-foreground mt-2">
-            
-          </p>
-        </motion.div>
       </div>
     </section>
   );
 };
 
 export default ContactSection;
-
