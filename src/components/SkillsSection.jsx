@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Folder, X, CheckCircle2, ArrowUpRight, Cpu, Blocks, 
@@ -269,6 +270,11 @@ const StackFolder3D = ({ folderGradient, papers }) => {
 
 const SkillsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Close modal on ESC key
   useEffect(() => {
@@ -365,109 +371,114 @@ const SkillsSection = () => {
           })}
         </div>
 
-        {/* Modal Popup - Matching Screenshot 2 */}
-        <AnimatePresence>
-          {selectedCategory && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-              {/* Backdrop */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSelectedCategory(null)}
-                className="absolute inset-0 bg-black/80 backdrop-blur-md"
-              />
+        {/* Modal Popup - Matching Screenshot 2 rendered via createPortal */}
+        {mounted && createPortal(
+          <AnimatePresence>
+            {selectedCategory && (
+              <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+                {/* Backdrop */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setSelectedCategory(null)}
+                  className="fixed inset-0 bg-black/85 backdrop-blur-md cursor-pointer"
+                />
 
-              {/* Modal Container */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.94, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.94, y: 20 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-[#0d0f17] border border-white/15 p-6 sm:p-8 shadow-2xl z-10"
-              >
-                {/* Modal Header */}
-                <div className="flex items-start justify-between gap-4 mb-6 pb-5 border-b border-white/10">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center border shadow-lg ${selectedCategory.badgeBg} ${selectedCategory.badgeText}`}>
-                      <Folder className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2.5 flex-wrap">
-                        <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                          {selectedCategory.title}
-                        </h3>
-                        <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/30">
-                          {selectedCategory.verifiedItems.length} Verified Items
-                        </span>
+                {/* Modal Container */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.94, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.94, y: 20 }}
+                  transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                  className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-[#0d0f17] border border-white/20 p-6 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.9)] z-10"
+                >
+                  {/* Modal Header */}
+                  <div className="flex items-start justify-between gap-4 mb-6 pb-5 border-b border-white/10">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center border shadow-lg ${selectedCategory.badgeBg} ${selectedCategory.badgeText}`}>
+                        <Folder className="w-6 h-6" />
                       </div>
-                      <p className="text-xs text-slate-400 font-mono mt-1">
-                        Technical Breakdown & Proficiency Specs
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Close 'X' Button */}
-                  <button
-                    onClick={() => setSelectedCategory(null)}
-                    className="p-2 rounded-full border border-white/10 bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
-                    aria-label="Close Modal"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Verified Proficiency Items List */}
-                <div className="space-y-3.5 mb-8">
-                  {selectedCategory.verifiedItems.map((item, idx) => (
-                    <motion.div
-                      key={item.name}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.05 }}
-                      className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all space-y-2.5"
-                    >
-                      {/* Top Label & Mastery Pill */}
-                      <div className="flex items-center justify-between gap-2 flex-wrap">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-4 h-4 rounded-full border border-amber-400/80 flex items-center justify-center text-amber-400 shrink-0">
-                            <Check className="w-2.5 h-2.5 stroke-[3]" />
-                          </div>
-                          <span className="text-sm sm:text-base font-bold text-white tracking-tight">
-                            {item.name}
+                      <div>
+                        <div className="flex items-center gap-2.5 flex-wrap">
+                          <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                            {selectedCategory.title}
+                          </h3>
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/30">
+                            {selectedCategory.verifiedItems.length} Verified Items
                           </span>
                         </div>
-                        <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-amber-500/10 border border-amber-500/25 text-amber-300">
-                          {item.mastery}% Mastery
-                        </span>
+                        <p className="text-xs text-slate-400 font-mono mt-1">
+                          Technical Breakdown & Proficiency Specs
+                        </p>
                       </div>
+                    </div>
 
-                      {/* Animated Proficiency Bar */}
-                      <div className="w-full h-2 rounded-full bg-slate-900 border border-white/10 overflow-hidden p-0.5">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${item.mastery}%` }}
-                          transition={{ duration: 0.8, delay: 0.15 + idx * 0.05, ease: 'easeOut' }}
-                          className={`h-full rounded-full bg-gradient-to-r ${selectedCategory.barGradient} shadow-sm`}
-                        />
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+                    {/* Close 'X' Button */}
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCategory(null)}
+                      className="p-2 rounded-full border border-white/10 bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                      aria-label="Close Modal"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
 
-                {/* Modal Footer Action */}
-                <div className="flex justify-end pt-2 border-t border-white/10">
-                  <button
-                    onClick={() => setSelectedCategory(null)}
-                    className="px-6 py-2.5 rounded-xl text-xs font-mono font-bold bg-white/5 hover:bg-white/10 text-slate-200 border border-white/15 hover:border-white/30 transition-all shadow-md active:scale-95"
-                  >
-                    Close Stack Folder
-                  </button>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
+                  {/* Verified Proficiency Items List */}
+                  <div className="space-y-3.5 mb-8">
+                    {selectedCategory.verifiedItems.map((item, idx) => (
+                      <motion.div
+                        key={item.name}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                        className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all space-y-2.5"
+                      >
+                        {/* Top Label & Mastery Pill */}
+                        <div className="flex items-center justify-between gap-2 flex-wrap">
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-4 h-4 rounded-full border border-amber-400/80 flex items-center justify-center text-amber-400 shrink-0">
+                              <Check className="w-2.5 h-2.5 stroke-[3]" />
+                            </div>
+                            <span className="text-sm sm:text-base font-bold text-white tracking-tight">
+                              {item.name}
+                            </span>
+                          </div>
+                          <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-amber-500/10 border border-amber-500/25 text-amber-300">
+                            {item.mastery}% Mastery
+                          </span>
+                        </div>
+
+                        {/* Animated Proficiency Bar */}
+                        <div className="w-full h-2 rounded-full bg-slate-900 border border-white/10 overflow-hidden p-0.5">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${item.mastery}%` }}
+                            transition={{ duration: 0.8, delay: 0.15 + idx * 0.05, ease: 'easeOut' }}
+                            className={`h-full rounded-full bg-gradient-to-r ${selectedCategory.barGradient} shadow-sm`}
+                          />
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Modal Footer Action */}
+                  <div className="flex justify-end pt-2 border-t border-white/10">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCategory(null)}
+                      className="px-6 py-2.5 rounded-xl text-xs font-mono font-bold bg-white/5 hover:bg-white/10 text-slate-200 border border-white/15 hover:border-white/30 transition-all shadow-md active:scale-95 cursor-pointer"
+                    >
+                      Close Stack Folder
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
 
       </div>
     </section>
